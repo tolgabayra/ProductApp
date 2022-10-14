@@ -12,6 +12,7 @@ const authRoute = require("./routes/auth")
 
 
 dotenv.config()
+
 mongoose
     .connect(process.env.DB_URL)
     .then(() => {

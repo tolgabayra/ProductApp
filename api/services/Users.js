@@ -1,8 +1,8 @@
 const User = require("../models/User")
 
 
-const remove = () => {
-  
+const remove = (data) => {
+    
 }
 
 const update = () => {
