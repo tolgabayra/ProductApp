@@ -1,6 +1,6 @@
 const User = require("../models/User")
-const crypto = require("crypto")
-const jwt = require("jsonwebtoken")
+const crypto = require("crypto");
+const { generateAccessToken, generateRefreshToken } = require("../scripts/helper");
 
 
 const register = async (req, res) => {
@@ -26,7 +26,6 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const email = req.body.email
   const password = req.body.password
-
   try {
     const user = await User.findOne({ email })
     if (!user) {
@@ -35,13 +34,11 @@ const login = async (req, res) => {
     }
     const dbPassword2 = crypto.createHash('sha256').update(password).digest('base64');
     
-
-
-
     if (user.password === dbPassword2) {
       const payload = {"_id": user._id, "email": user.email}
-      const accessToken = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, { expiresIn: "1d" })
-      const refreshToken = jwt.sign({ payload }, process.env.JWT_SECRET_KEY)
+      const accessToken = generateAccessToken(payload)
+      const refreshToken = generateRefreshToken(payload)
+
       res.cookie('access_token', accessToken, {
         origin: '*',
         httpOnly: true

@@ -9,6 +9,7 @@ const morgan = require("morgan")
 
 
 const authRoute = require("./routes/auth")
+const taskRoute = require("./routes/task")
 
 
 dotenv.config()
@@ -30,6 +31,7 @@ app.use(morgan("dev"))
 
 
 app.use("/api/v1/auth", authRoute)
+app.use("/api/v1/task", taskRoute)
 
     
 app.listen(process.env.APP_PORT || 8000,() => {
