@@ -1,19 +1,28 @@
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import MainLayout from "../layouts/home/index"
 
-
 import { Button, Checkbox, Form, Input } from 'antd';
-
+import { appAxios } from '../utils/appAxios';
 
 
 export default function Login() {
-    const onFinish = (values) => {
-        console.log('Success:', values);
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+    const [eposta, setEposta] = useState("")
+    const [password, setPassword] = useState("")
+
+    const submitLogin = () => {
+        appAxios.post("/auth/login", {
+            eposta,
+            password
+        }, { withCredentials: true })
+            .then((res) => {
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     return (
         <div>
             <div className="flex justify-center">
@@ -23,22 +32,27 @@ export default function Login() {
                             <label className="block text-gray-700 text-sm font-bold mb-1" for="username">
                                 Eposta
                             </label>
-                            <Input className='shadow-md' placeholder="Eposta" />
+                            <Input onChange={(e) => setEposta(e.target.value)} className='shadow-md' placeholder="Eposta" />
                         </div>
                         <div className="mb-6">
                             <label className="block text-gray-700 text-sm font-bold mb-1" for="password">
                                 Parola
                             </label>
-                            <Input.Password className='mb-1 shadow-md' placeholder="Parola" />
-                            <Link href="/reset_password">
-                                <a className='text-sm text-indigo-500'>Parolamı Unuttum</a>
-                            </Link>
+                            <Input.Password onChange={(e) => setPassword(e.target.value)} className='mb-1 shadow-md' placeholder="Parola" />
+                            <div className='flex justify-between mt-1'>
+                                <Link href="/reset_password">
+                                    <a className='text-sm text-indigo-500'>Parolamı Unuttum</a>
+                                </Link>
+                                <Link href="/register">
+                                    <a className='text-sm text-indigo-500'>Üye Ol</a>
+                                </Link>
+                            </div>
+
                         </div>
                         <div className="flex items-center justify-between">
-                            <button className='inline-block w-full px-4 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out'>
+                            <button onClick={submitLogin} className='inline-block w-full px-4 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out'>
                                 Giriş Yap
                             </button>
-
                         </div>
                     </div>
                     <p className="text-center text-grey text-xs">
