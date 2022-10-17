@@ -1,22 +1,30 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import MainLayout from "../layouts/home/index"
 
 import { Button, Checkbox, Form, Input } from 'antd';
 import { appAxios } from '../utils/appAxios';
+import AuthContext from "../store/authContext"
+import { useRouter } from 'next/router';
 
 
 export default function Login() {
-    const [eposta, setEposta] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const { login } = useContext(AuthContext)
+    const router = useRouter()
 
     const submitLogin = () => {
         appAxios.post("/auth/login", {
-            eposta,
+            email,
             password
-        }, { withCredentials: true })
+        })
             .then((res) => {
-
+                console.log(res);
+                login
+                localStorage.setItem("email",res.data.email)
+                router.push(`/profile/${res.data.username}`)
             })
             .catch(err => {
                 console.log(err);
@@ -32,7 +40,7 @@ export default function Login() {
                             <label className="block text-gray-700 text-sm font-bold mb-1" for="username">
                                 Eposta
                             </label>
-                            <Input onChange={(e) => setEposta(e.target.value)} className='shadow-md' placeholder="Eposta" />
+                            <Input onChange={(e) => setEmail(e.target.value)} className='shadow-md' placeholder="Eposta" />
                         </div>
                         <div className="mb-6">
                             <label className="block text-gray-700 text-sm font-bold mb-1" for="password">

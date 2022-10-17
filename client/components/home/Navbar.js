@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from "next/link"
 
+import AuthContext from "../../store/authContext"
+
 export default function Navbar() {
-  return (
-    <div>
+    const {user} = useContext(AuthContext)
+    console.log("User Info :",user);
+    return (
+        <div>
             <header className="text-gray-700 body-font border-b border-gray-200">
                 <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                     <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="/">
@@ -14,23 +18,45 @@ export default function Navbar() {
                     </a>
                     <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
                         <a className="mr-5 hover:text-gray-900">Anasayfa</a>
+                        <Link href="/tasks">
                         <a className="mr-5 hover:text-gray-900">Egzersizler</a>
+
+                        </Link>
                         <a className="mr-5 hover:text-gray-900">About</a>
                     </nav>
-                    <Link href="/register">
-                        <a className="inline-flex mr-2 items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Üye Ol
-                           
-                        </a>
-                    </Link>
+                         
 
-                    <Link href="/login">
+                         {
+                            user ?
+                             <button>Çıkış Yap</button>
+                             :
 
-                        <a className="inline-flex mr-2 items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Giriş Yap
-                        
-                        </a>
-                    </Link>
+                             <div>
+                      
+                             <Link href="/register">
+                                 <a className="inline-flex mr-2 items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Üye Ol
+         
+                                 </a>
+                             </Link>
+         
+                             <Link href="/login">
+         
+                                 <a className="inline-flex mr-2 items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Giriş Yap
+         
+                                 </a>
+                             </Link>
+                             </div>
+                         
+                         }
+                   
+                 
+                    
+                  
+
+                    
+            
                 </div>
             </header>
-    </div>
-  )
+        </div>
+    )
 }
