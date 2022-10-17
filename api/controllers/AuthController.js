@@ -1,7 +1,7 @@
 const User = require("../models/User")
 const crypto = require("crypto");
 const { generateAccessToken, generateRefreshToken } = require("../scripts/helper");
-
+const jwt = require("jsonwebtoken")
 
 const register = async (req, res) => {
   const hash = crypto.createHash('sha256').update(req.body.password).digest('base64');
@@ -33,11 +33,12 @@ const login = async (req, res) => {
       return
     }
     const dbPassword2 = crypto.createHash('sha256').update(password).digest('base64');
-    
+
     if (user.password === dbPassword2) {
-      const payload = {"_id": user._id, "email": user.email}
-      const accessToken = generateAccessToken(payload)
-      const refreshToken = generateRefreshToken(payload)
+      const payload = {"_id": user._id.toString(), "email": user.email}
+      console.log(payload);
+      const accessToken = jwt.sign({ payload }, process.env.JWT_SECRET_KEY, { expiresIn: "1d" })
+      const refreshToken = jwt.sign({ payload }, process.env.JWT_SECRET_KEY)
 
       res.cookie('access_token', accessToken, {
         origin: '*',
@@ -52,6 +53,7 @@ const login = async (req, res) => {
       res.status(401).json("Password is wrong...")
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json(err.stack)
   }
 }
