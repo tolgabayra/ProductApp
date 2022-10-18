@@ -22,6 +22,7 @@ export default function Login() {
         })
             .then((res) => {
                 console.log(res);
+                console.log("Tolga");
                 login
                 localStorage.setItem("email",res.data.email)
                 router.push(`/profile/${res.data.username}`)
