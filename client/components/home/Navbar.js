@@ -30,7 +30,6 @@ export default function Navbar() {
                             user ?
                              <button>Çıkış Yap</button>
                              :
-
                              <div>
                       
                              <Link href="/register">

@@ -23,8 +23,10 @@ export default function Login() {
             .then((res) => {
                 console.log(res);
                 console.log("Tolga");
-                login
+                login()
                 localStorage.setItem("email",res.data.email)
+                localStorage.setItem("user_id",res.data._id)
+
                 router.push(`/profile/${res.data.username}`)
             })
             .catch(err => {

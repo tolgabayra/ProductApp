@@ -3,11 +3,11 @@ import 'antd/dist/antd.css'
 import { AuthContextProvider } from '../store/authContext'
 
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps}) {
   const getLayout = Component.getLayout || ((page) => page)
 
   return (
-    <AuthContextProvider >
+    <AuthContextProvider>
       { getLayout(<Component {...pageProps} />) }
     </AuthContextProvider>
 

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-
+import { appAxios } from "../utils/appAxios"
 const AuthContext = createContext({
     user: false,
     login: ()=>{},
@@ -13,6 +13,16 @@ export const AuthContextProvider = ({children}) => {
   useEffect(() => {
     setUser(user)  
   },[user])
+
+  useEffect(() => {
+    appAxios.get(`/auth/me/${localStorage.getItem("user_id")}`,{withCredentials: true})
+    .then((res) => {
+      setUser(true)
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  },[])
 
 
   const login = () => {
