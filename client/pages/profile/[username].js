@@ -39,8 +39,10 @@ export default function Profile() {
         return (
             <div>
 
-                <h1 className="text-3xl font-black mb-10">
-                    Hoş Geldin
+                <h1 className="text-3xl font-black text-center mt-4">
+                    Hoş Geldin, Esra 
+
+                    
                 </h1>
 
             </div>

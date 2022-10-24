@@ -2,10 +2,29 @@ import React, { useContext } from 'react'
 import Link from "next/link"
 
 import AuthContext from "../../store/authContext"
+import { Router, useRouter } from 'next/router';
+import { message } from 'antd';
 
 export default function Navbar() {
-    const {user} = useContext(AuthContext)
+    const {user, logout} = useContext(AuthContext)
     console.log("User Info :",user);
+    const router = useRouter()
+    const submitLogout = () => {
+        message.success({
+            content: 'Çıkış Başarılı, yönlendiriliyorsunuz...',
+            className: 'custom-class',
+            style: {
+              marginLeft: '150vh',
+            },
+          });
+          setTimeout(() => {
+            router.push("/login")
+            logout()
+          },2000)
+        
+    
+    }
+
     return (
         <div>
             <header className="text-gray-700 body-font border-b border-gray-200">
@@ -28,7 +47,7 @@ export default function Navbar() {
 
                          {
                             user ?
-                             <button>Çıkış Yap</button>
+                             <button onClick={submitLogout} className='bg-gray-500 text-white p-2 rounded-xl'>Çıkış Yap</button>
                              :
                              <div>
                       
