@@ -34,9 +34,10 @@ export default function task_card() {
                     <p className="mb-4 text-gray-500">A recipe that's quick and easy to make and super tasty!</p>
                     <Button size='large' className=''   block>
                         Hemen Başlayalım.
-                    </Button>                        </div>
+                    </Button>            
+                                </div>
                 <div className="absolute top-0 right-0 mt-4 mr-4 bg-indigo-500 text-white rounded-full pt-1 pb-1 pl-4 pr-5 text-xs uppercase">
-                    <span>Medium</span>
+                    <span>Hakkımızda</span>
                 </div>
             </div>
         </div>
